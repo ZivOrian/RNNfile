@@ -42,7 +42,7 @@ index2words = {
     SOS_token : 'SOS',
     EOS_token : 'EOS'
 }
-words = "How are you doing ? I am good and you ?"
+words = " How are you doing ? I am good and you ?"
 words_list = set(words.lower().split(' '))
 
 for word in words_list:

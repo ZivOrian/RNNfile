@@ -4,7 +4,28 @@ import torch.nn.functional as F
 import re
 
 
-
+Embed_dim = 300
+class Rnn(nn.Module):
+    
+    def __init__(self):
+        super(Rnn, self).__init__()
+        #self.rnnL1 = nn.RNN(input_size=Embed_dim ,hidden_size=1024,
+        #        nonlinearity= 'tanh' ,num_layers=num_layers, batch_first= True)
+        self.rnnL1 = nn.RNNCell(input_size=Embed_dim ,hidden_size=1024)
+        self.rnnL2 = nn.RNNCell(input_size=1024 ,hidden_size=256)
+        self.linL3 = nn.Linear(256,5)
+        self.relu = nn.ReLU()
+        
+        self.dropout = nn.Dropout(0.5)
+        self.softmax = nn.Softmax()
+    def forward(self,x):
+        #x,hidden =self.rnnL1(x)
+        x=self.dropout(self.rnnL1(x))
+        x=self.rnnL2(x)
+        x=self.relu(self.linL3(x))
+        x=self.softmax(x)
+        
+        return x
 
 
 

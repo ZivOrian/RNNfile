@@ -11,8 +11,10 @@ class Rnn(nn.Module):
         super(Rnn, self).__init__()
         #self.rnnL1 = nn.RNN(input_size=Embed_dim ,hidden_size=1024,
         #        nonlinearity= 'tanh' ,num_layers=num_layers, batch_first= True)
-        self.rnnL1 = nn.RNNCell(input_size=Embed_dim ,hidden_size=1024)
+        self.rnnL1 = nn.RNNCell(input_size=Embed_dim ,hidden_size=1024, bias=True)
+        torch.nn.init.orthogonal(self.rnnL1.weight_hh)
         self.rnnL2 = nn.RNNCell(input_size=1024 ,hidden_size=256)
+        torch.nn.init.orthogonal(self.rnnL2.weight_hh)
         self.linL3 = nn.Linear(256,5)
         self.relu = nn.ReLU()
         
